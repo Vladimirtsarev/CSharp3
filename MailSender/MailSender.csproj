@@ -58,7 +58,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ErrorMessageWindow.xaml.cs">
+      <DependentUpon>ErrorMessageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SendEndWindow.xaml.cs">
+      <DependentUpon>SendEndWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\StaticVariables.cs" />
+    <Page Include="ErrorMessageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SendEndWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -111,6 +125,9 @@
       <Project>{f83c96fd-9788-4c47-a8fa-155a36f515e9}</Project>
       <Name>MailSenderLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\email-icons.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

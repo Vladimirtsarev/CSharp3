@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -79,7 +80,13 @@ namespace MailSender
 
         private void btnSend_Click(object sender, RoutedEventArgs e)
         {
-            SendMail();
+            //SendMail();
+            
+            SendEndWindow sew = new SendEndWindow();
+            sew.ShowDialog();
+
+            ErrorMessageWindow emw = new ErrorMessageWindow(new Exception("Типа ошибка"));
+            emw.ShowDialog();
         }
 
         /// <summary>
@@ -97,6 +104,9 @@ namespace MailSender
             catch (Exception e)
             {
                 MessageBox.Show("Ошибка отправки письма:\n" + e.ToString());
+
+                ErrorMessageWindow emw = new ErrorMessageWindow(e);
+                emw.ShowDialog();
             }
 
         }

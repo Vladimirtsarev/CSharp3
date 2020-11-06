@@ -5,59 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MailSender"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Рассыльщик" Height="281" Width="196" 
+        Icon="email-icons.png" 
+        Background="{DynamicResource WindowBackgroundBrush}"
+        WindowStartupLocation="CenterScreen" MinWidth="375" MinHeight="430" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="39*"/>
-            <RowDefinition Height="281*"/>
-            <RowDefinition Height="39*"/>
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="350*"/>
+            <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0">
+        <Menu Grid.Row="0" Margin="0">
             <MenuItem Header="Файл"/>
             <MenuItem Header="Помощь"/>
         </Menu>
-        <TabControl Grid.Row="1" SelectedIndex="2">
-            <TabItem Header="Редактирование писем">
-                <StackPanel>
-                    <Label Content="Название письма:" Width="auto"/>
-                    <TextBox Grid.Row="1"  x:Name="tbSubject" Width="200" HorizontalAlignment="Left" Text="Тест рассыльщика"/>
-                    <Label Content="Содержимое письма:" Width="auto"/>
-                    <TextBox Grid.Row="1"  x:Name="tbBody" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="100" AcceptsReturn="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Text="Текст рассылки"/>
-                    <Label Content="From"/>
-                    <ComboBox x:Name="cbFrom" Text="report@litaform.ru" SelectedIndex="0">
+        <TabControl SelectedIndex="2" Margin="0,27,0,2" Grid.RowSpan="2">
+            <TabItem Header="Редактирование писем" >
+                <StackPanel Width="342">
+                    <Label Content="Название письма:" Width="auto" Margin="10,3"/>
+                    <TextBox Grid.Row="1"  x:Name="tbSubject" Text="Тест рассыльщика" Foreground="{DynamicResource TextBoxForegroundBrush}" BorderBrush="#A8FDDA81" Margin="2,3,2,5"/>
+                    <Label Content="Содержимое письма:" Width="auto" Margin="10,3"/>
+                    <TextBox Grid.Row="1"  x:Name="tbBody" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="100" AcceptsReturn="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Text="Текст рассылки" Foreground="#FF999999" BorderBrush="#A8FDDA81" Margin="2,3,2,5"/>
+                    <Label Content="От:" Margin="10,3"/>
+                    <ComboBox x:Name="cbFrom" Text="report@litaform.ru" SelectedIndex="0" BorderBrush="#FF222222" Foreground="#FF999999" Background="Black" Margin="2,3,2,5">
                         <ComboBoxItem>report@litaform.ru</ComboBoxItem>
                         <ComboBoxItem>79262685273@ya.ru</ComboBoxItem>
                     </ComboBox>
-                    <Label Content="To"/>
-                    <ComboBox x:Name="cbTo" Text="79262685273@ya.ru" SelectedIndex="0">
+                    <Label Content="Кому:" Margin="10,3"/>
+                    <ComboBox x:Name="cbTo" Text="79262685273@ya.ru" SelectedIndex="0" Foreground="#FF999999" Margin="2,3,2,5">
                         <ComboBoxItem>79262685273@ya.ru</ComboBoxItem>
                         <ComboBoxItem>putin@kremlin.ru</ComboBoxItem>
                     </ComboBox>
-                    <Button  x:Name="btnSend" Width="auto" Content="Отправить немедленно" Click="btnSend_Click"/>
+                    <Button  x:Name="btnSend" Content="Отправить немедленно" Click="btnSend_Click" Margin="2,5,2,0" Height="30" />
                 </StackPanel>
             </TabItem>
             <TabItem Header="Настройки">
-                <WrapPanel Height="166" VerticalAlignment="Top" Width="350" HorizontalAlignment="Left">
-                    <Label Content="Сервер:" Width="auto"/>
-                    <TextBox Grid.Row="1"  x:Name="tbServer" Width="200" HorizontalAlignment="Left" Text="smtp.gmail.com" Height="20"/>
-                    <Label Content="Порт:" Width="auto"/>
-                    <TextBox Grid.Row="1" x:Name="tbPort" Width="36" Text="587" Height="20"/>
+                <WrapPanel Height="166" VerticalAlignment="Top" Width="342" HorizontalAlignment="Left">
+                    <Label Content="Сервер:" Width="auto" VerticalAlignment="Center" Margin="0,5,3,5"/>
+                    <TextBox Grid.Row="1"  x:Name="tbServer" Width="130" HorizontalAlignment="Center" Text="smtp.gmail.com" Height="22" VerticalAlignment="Center" Margin="2,5,10,5" Foreground="#FF999999" />
                     <Line></Line>
-                    <Label Content="Имя пользователя:" Width="auto"/>
-                    <TextBox Grid.Row="1" x:Name="tbUserName" Width="350" Text="report@litaform.ru" Height="20"/>
-                    <Label Content="Пароль:" Width="auto"/>
-                    <PasswordBox Grid.Row="1" x:Name="tbPassword" Width="350" PasswordChar="*" Password="" Height="20"/>
-                    <CheckBox x:Name="chBoxSSL" Height="20" Width="50" Content="SSL" IsChecked="True"/>
+                    <Label Content="Порт:" Width="auto" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,5,3,5"/>
+                    <TextBox x:Name="tbPort" Width="36" Text="587" Height="22" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3,5,10,5" Foreground="#FF999999"/>
+                    <CheckBox x:Name="chBoxSSL" Height="15" Width="42" Content="SSL" IsChecked="True" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,5,3,5" Background="#FF444444"/>
+                    <Label Content="Имя пользователя:" Width="auto" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,3"/>
+                    <TextBox Grid.Row="1" x:Name="tbUserName" Width="340" Text="report@litaform.ru" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,3,0,5" Foreground="#FF999999" />
+                    <Label Content="Пароль:" Width="auto" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <PasswordBox Grid.Row="1" x:Name="tbPassword" Width="340" PasswordChar="*" Password="" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,3,0,5" Foreground="#FF999999" BorderBrush="#A8FDDA81"/>
+
                 </WrapPanel>
 
             </TabItem>
             <TabItem Header="Журнал">
-                <TextBox x:Name="tbLog" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                <StackPanel Width="342" MinWidth="340" HorizontalAlignment="Left" VerticalAlignment="Top" Height="315">
+                    <TextBox x:Name="tbLog" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AllowDrop="False" MinWidth="50" MinHeight="50" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="303" Margin="3"/>
+                </StackPanel>
+
 
             </TabItem>
-            
+
+
         </TabControl>
-        <StatusBar x:Name="sbStatus" Grid.Row="2">
+        <StatusBar x:Name="sbStatus" Grid.Row="1" Background="#FF1E1E1E" Foreground="{x:Null}" Height="20" VerticalAlignment="Bottom" Grid.RowSpan="2">
             <Label x:Name="lbStatus"/>
         </StatusBar>
     </Grid>

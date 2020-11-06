@@ -13,9 +13,9 @@ namespace MailSenderLib
 {
     public class MailSender
     {
-        private SmtpClient smtp=new SmtpClient();
+        private readonly SmtpClient smtp = new SmtpClient();
 
-        private MailMessage message =new MailMessage();
+        private readonly MailMessage message =new MailMessage();
 
         /// <summary>
         /// Посылает письмо
@@ -29,12 +29,15 @@ namespace MailSenderLib
 
             MailCredential credential = new MailCredential();
             credential.ReadFromJson("mailcredential.json");
-               
+
             // message
-            message = new MailMessage(new MailAddress(credential.From, credential.MailFromName), mailto);
-            message.Subject = subject;
-            message.Body = body;
-              
+            message = new MailMessage(new MailAddress(credential.From, credential.MailFromName), mailto)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = false
+            };
+
             if (attachFile != null)
             {
                 foreach (string s in attachFile)
@@ -47,8 +50,10 @@ namespace MailSenderLib
             // smtp
             smtp.Host = credential.SmtpServer;
             smtp.Port = credential.Port;
+            smtp.UseDefaultCredentials = false;
             smtp.Credentials = new NetworkCredential(credential.From, credential.PW);
             smtp.EnableSsl = credential.SSL;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
         }
 
         /// <summary>
