@@ -80,13 +80,13 @@ namespace MailSender
 
         private void btnSend_Click(object sender, RoutedEventArgs e)
         {
-            //SendMail();
+            SendMail();
             
             SendEndWindow sew = new SendEndWindow();
             sew.ShowDialog();
 
-            ErrorMessageWindow emw = new ErrorMessageWindow(new Exception("Типа ошибка"));
-            emw.ShowDialog();
+            //ErrorMessageWindow emw = new ErrorMessageWindow(new Exception("Типа ошибка"));
+            //emw.ShowDialog();
         }
 
         /// <summary>
