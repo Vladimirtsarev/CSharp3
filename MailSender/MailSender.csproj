@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -58,14 +59,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ErrorMessageWindow.xaml.cs">
+    <Compile Include="Scheduler.cs" />
+    <Compile Include="View\ErrorMessageWindow.xaml.cs">
       <DependentUpon>ErrorMessageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SendEndWindow.xaml.cs">
       <DependentUpon>SendEndWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StaticVariables.cs" />
-    <Page Include="ErrorMessageWindow.xaml">
+    <Page Include="View\ErrorMessageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -121,13 +123,33 @@
     <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CodePassword\CodePassword.csproj">
+      <Project>{471295ad-5e30-4da5-a417-0c7e1f375d66}</Project>
+      <Name>CodePassword</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MailSenderLib\MailSenderLib.csproj">
       <Project>{f83c96fd-9788-4c47-a8fa-155a36f515e9}</Project>
       <Name>MailSenderLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TabSwitcher\TabSwitcher.csproj">
+      <Project>{C30E7739-5E4A-4CE7-80C5-F763B8220530}</Project>
+      <Name>TabSwitcher</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="View\email-icons.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\add.png" />
+    <Resource Include="Images\clock.png" />
+    <Resource Include="Images\edit.png" />
+    <Resource Include="Images\mail.jpg" />
+    <Resource Include="Images\mail.png" />
+    <Resource Include="Images\remove.png" />
+    <Resource Include="Images\scheduler.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

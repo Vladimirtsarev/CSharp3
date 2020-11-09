@@ -32,6 +32,18 @@ namespace MailSender
         {
             InitializeComponent();
 
+            cbSenderSelect.ItemsSource = StaticVariables.Senders;
+            cbSenderSelect.DisplayMemberPath = "Key";
+            cbSenderSelect.SelectedValuePath = "Value";
+
+            //Debug.WriteLine("\n"+Password.getCodPassword("gcadyoxwnphnrgle")+"\n");
+            
+            
+            
+
+            DB db = new DB();
+            dgEmails.ItemsSource = db.Emails;
+
             MailCredential m = new MailCredential();
             if (m.ReadFromJson("mailcredential.json"))
             {
@@ -41,6 +53,8 @@ namespace MailSender
             {
                 Presets2();
             }
+
+
 
         }
 
@@ -81,7 +95,7 @@ namespace MailSender
         private void btnSend_Click(object sender, RoutedEventArgs e)
         {
             SendMail();
-            
+
             SendEndWindow sew = new SendEndWindow();
             sew.ShowDialog();
 
@@ -111,8 +125,81 @@ namespace MailSender
 
         }
 
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 
+        private void btnClock_Click(object sender, RoutedEventArgs e)
+        {
+            tabControl.SelectedItem = tabPlanner;
+        }
 
+        private void btnTabContSelIndexMin_Click(object sender, RoutedEventArgs e)
+        {
+            if (tabControl.SelectedIndex > 0)
+            {
+                tabControl.SelectedIndex--;
+                btnTabContSelIndexPlus.IsEnabled = true;
+            }
+            else btnTabContSelIndexMin.IsEnabled = false;
+        }
 
+        private void btnTabContSelIndexPlus_Click(object sender, RoutedEventArgs e)
+        {
+            if (tabControl.SelectedIndex < tabControl.Items.Count - 1)
+            {
+                tabControl.SelectedIndex++;
+                btnTabContSelIndexMin.IsEnabled = true;
+            }
+            else btnTabContSelIndexPlus.IsEnabled = false;
+        }
+
+        private void btnSendAtOnce_Click(object sender, RoutedEventArgs e)
+        {
+            string strLogin = cbSenderSelect.Text;
+            string strPassword = cbSenderSelect.SelectedValue.ToString();
+            if (string.IsNullOrEmpty(strLogin))
+            {
+                //MessageBox.Show("Выберите отправителя");
+                ErrorMessageWindow emw = new ErrorMessageWindow(new Exception("Выберите отправителя"));
+                emw.ShowDialog();
+                return;
+            }
+            if (string.IsNullOrEmpty(strPassword))
+            {
+                //MessageBox.Show("Укажите пароль отправителя");
+                ErrorMessageWindow emw = new ErrorMessageWindow(new Exception("Укажите пароль отправителя"));
+                emw.ShowDialog();
+                return;
+            }
+
+            EmailSendService emailSender = new EmailSendService(strLogin, strPassword);
+            emailSender.SendMails((IQueryable<Email>)dgEmails.ItemsSource);
+        }
+
+        private void btnSendP_Click(object sender, RoutedEventArgs e)
+        {
+            SchedulerClass sc = new SchedulerClass();
+            TimeSpan tsSendTime = sc.GetSendTime(tbTimePicker.Text);
+            if (tsSendTime == new TimeSpan())
+            {
+                //MessageBox.Show("Некорректный формат даты");
+                ErrorMessageWindow emw = new ErrorMessageWindow(new Exception("Некорректный формат даты"));
+                emw.ShowDialog();
+                return;
+            }
+            DateTime dtSendDateTime = (cldSchedulDateTimes.SelectedDate ?? DateTime.Today).Add(tsSendTime);
+            if (dtSendDateTime < DateTime.Now)
+            {
+                //MessageBox.Show("Дата и время отправки писем не могут быть раньше, чем настоящее время");
+                ErrorMessageWindow emw = new ErrorMessageWindow(new Exception("Дата и время отправки писем не могут быть раньше, чем настоящее время"));
+                emw.ShowDialog();
+                return;
+            }
+            EmailSendService emailSender = new EmailSendService(cbSenderSelect.Text, cbSenderSelect.SelectedValue.ToString());
+            sc.SendEmails(dtSendDateTime, emailSender, (IQueryable<Email>)dgEmails.ItemsSource);
+
+        }
     }
 }

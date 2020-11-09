@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using CodePassword;
 
 
 namespace MailSender
@@ -58,5 +58,17 @@ namespace MailSender
         /// </summary>
         public static bool Ssl { get; set; } = true;
         
+
+        public static Dictionary<string, string> Senders
+        {
+            get { return dicSenders; }
+        }
+        private static Dictionary<string, string> dicSenders = new Dictionary<string, string>()
+        {
+            {"report@litaform.ru", CodePassword.Password.getPassword("hdbezpyxoqioshmf") }
+            //,{"2@mail.ru", Password.getPassword("password2") }
+
+        };
+
     }
 }

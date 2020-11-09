@@ -17,18 +17,18 @@
     <SolidColorBrush x:Key="TextBoxForegroundBrush" Color="#FF999999"/>
 
     <LinearGradientBrush x:Key="NormalBrush" EndPoint="0.5,1" StartPoint="0.5,0">
-        <GradientStop Color="#FF000000" Offset="0"/>
-        <GradientStop Color="#FFA4ADBB" Offset="0.521"/>
-        <GradientStop Color="#FFD7E0EA" Offset="0.194"/>
-        <GradientStop Color="#FFBAC1CF" Offset="0.811"/>
-        <GradientStop Color="#FFBCC5D5" Offset="0.507"/>
-        <GradientStop Color="#FFE3E4E6" Offset="1"/>
+        <GradientStop Color="#FF1e1e1e" Offset="0"/>
+        <GradientStop Color="#FF3e3e3e" Offset="0.521"/>
+        <GradientStop Color="#FF1e1e1e" Offset="0.194"/>
+        <GradientStop Color="#FF3e3e3e" Offset="0.811"/>
+        <GradientStop Color="#FF2e2e2e" Offset="0.507"/>
+        <GradientStop Color="#FF1e1e1e" Offset="1"/>
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="NormalBorderBrush" EndPoint="0.5,0" StartPoint="0.5,1">
         <GradientStop Color="#FF8B8B8B"/>
         <GradientStop Color="#FFADADAD" Offset="1"/>
     </LinearGradientBrush>
-    <SolidColorBrush x:Key="NormalHighlightBrush" Color="#FF0000000"/>
+    <SolidColorBrush x:Key="NormalHighlightBrush" Color="#FF000000"/>
     <LinearGradientBrush x:Key="MouseOverBrush" EndPoint="0.5,1" StartPoint="0.5,0">
         <GradientStop Color="#FFFFFFFF" Offset="0" />
         <GradientStop Color="#FFFEF3B5" Offset="0.318" />
