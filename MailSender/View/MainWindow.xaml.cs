@@ -36,26 +36,20 @@ namespace MailSender
             cbSenderSelect.DisplayMemberPath = "Key";
             cbSenderSelect.SelectedValuePath = "Value";
 
-            //Debug.WriteLine("\n"+Password.getCodPassword("gcadyoxwnphnrgle")+"\n");
-            
-            
-            
-
             DB db = new DB();
             dgEmails.ItemsSource = db.Emails;
 
             MailCredential m = new MailCredential();
             if (m.ReadFromJson("mailcredential.json"))
             {
+                //из json
                 Presets1(m);
             }
             else
             {
+                // из StaticVariables
                 Presets2();
-            }
-
-
-
+            }            
         }
 
         /// <summary>
@@ -91,7 +85,11 @@ namespace MailSender
             chBoxSSL.Content = StaticVariables.Ssl;
         }
 
-
+        /// <summary>
+        /// Нажатие Отправить письмо 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSend_Click(object sender, RoutedEventArgs e)
         {
             SendMail();
@@ -130,31 +128,21 @@ namespace MailSender
             this.Close();
         }
 
+        /// <summary>
+        /// Нажатие Перейти в планировщик
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnClock_Click(object sender, RoutedEventArgs e)
         {
             tabControl.SelectedItem = tabPlanner;
         }
-
-        private void btnTabContSelIndexMin_Click(object sender, RoutedEventArgs e)
-        {
-            if (tabControl.SelectedIndex > 0)
-            {
-                tabControl.SelectedIndex--;
-                btnTabContSelIndexPlus.IsEnabled = true;
-            }
-            else btnTabContSelIndexMin.IsEnabled = false;
-        }
-
-        private void btnTabContSelIndexPlus_Click(object sender, RoutedEventArgs e)
-        {
-            if (tabControl.SelectedIndex < tabControl.Items.Count - 1)
-            {
-                tabControl.SelectedIndex++;
-                btnTabContSelIndexMin.IsEnabled = true;
-            }
-            else btnTabContSelIndexPlus.IsEnabled = false;
-        }
-
+        
+        /// <summary>
+        /// Нажатие кнопки Отправить сейчас
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSendAtOnce_Click(object sender, RoutedEventArgs e)
         {
             string strLogin = cbSenderSelect.Text;
@@ -178,6 +166,11 @@ namespace MailSender
             emailSender.SendMails((IQueryable<Email>)dgEmails.ItemsSource);
         }
 
+        /// <summary>
+        /// Назатие кнопки Отправить запланированно
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSendP_Click(object sender, RoutedEventArgs e)
         {
             SchedulerClass sc = new SchedulerClass();
@@ -200,6 +193,52 @@ namespace MailSender
             EmailSendService emailSender = new EmailSendService(cbSenderSelect.Text, cbSenderSelect.SelectedValue.ToString());
             sc.SendEmails(dtSendDateTime, emailSender, (IQueryable<Email>)dgEmails.ItemsSource);
 
+        }
+
+        /// <summary>
+        /// Нажатие Следующий таб на табсвичере
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TabSwitcherControl_btnNextClick(object sender, RoutedEventArgs e)
+        {
+            if (tabControl.SelectedIndex < tabControl.Items.Count - 1)
+            {                
+                // Показываем все
+                tscTabSwicher.IsHideBtnNext = false;
+                tscTabSwicher.IsHidebtnPrevious = false; 
+                
+                tabControl.SelectedIndex++;
+            }
+            if (tabControl.SelectedIndex == tabControl.Items.Count - 1)
+            {
+                // скрываем следующую
+                tscTabSwicher.IsHideBtnNext = true;                
+            }
+        }
+
+        /// <summary>
+        /// Нажатие Предыдущий таб на табсвичере
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TabSwitcherControl_btnPreviousClick(object sender, RoutedEventArgs e)
+        {            
+            if (tabControl.SelectedIndex == 1)
+            {
+                // скрываем предыдущую
+                tscTabSwicher.IsHidebtnPrevious = true;
+
+                tabControl.SelectedIndex--;
+            }
+            if (tabControl.SelectedIndex > 1)
+            {
+                //показываем все
+                tscTabSwicher.IsHidebtnPrevious = false;
+                tscTabSwicher.IsHideBtnNext = false;
+                
+                tabControl.SelectedIndex--;
+            }            
         }
     }
 }

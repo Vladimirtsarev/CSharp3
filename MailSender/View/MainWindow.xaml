@@ -7,32 +7,32 @@
         xmlns:TabSwitcher="clr-namespace:TabSwitcher;assembly=TabSwitcher"
         x:Class="MailSender.MainWindow"
         mc:Ignorable="d"
-        Title="Рассыльщик" Height="440" Width="550" 
+        Title="Рассыльщик" Height="540.833" Width="550" 
         Icon="email-icons.png" 
         Background="{DynamicResource WindowBackgroundBrush}"
         WindowStartupLocation="CenterScreen" MinWidth="550" MinHeight="440" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60*"/>
-            <RowDefinition Height="350*"/>
-            <RowDefinition Height="20*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="422*"/>
+            <RowDefinition Height="38*"/>
+            <RowDefinition Height="25*"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Margin="0">
-            <MenuItem Header="Файл" Margin="0,1,0,28">
+            <MenuItem Header="Файл">
                 <MenuItem x:Name="miClose" Header="Закрыть" Click="MenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="Помощь"/>
-            <MenuItem x:Name="btnTabContSelIndexMin" Header="&lt;" Margin="44,1,0,1" Click="btnTabContSelIndexMin_Click"/>
-            <MenuItem x:Name="btnTabContSelIndexPlus" Header="&gt;" Click="btnTabContSelIndexPlus_Click"/>
-
         </Menu>
-        <TabControl x:Name="tabControl" SelectedIndex="1" Margin="0,28,0,2" Grid.RowSpan="2" VerticalAlignment="Top" HorizontalAlignment="Center" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-            <TabItem Header="Группы рассылки">
-                <Grid Height="300">
+        <TabControl x:Name="tabControl" SelectedIndex="1"
+                    VerticalAlignment="Top" HorizontalAlignment="Center"
+                    HorizontalContentAlignment="Left" VerticalContentAlignment="Top"
+                    Height="420" Width="543" Grid.Row="1">
+            <TabItem x:Name="tabEmails" Header="Группы рассылки">
+                <Grid Height="370">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="95"/>
                         <RowDefinition Height="174*"/>
-                        <RowDefinition Height="31*"/>
                     </Grid.RowDefinitions>
                     <ToolBarTray VerticalAlignment="Top" Height="92" Margin="0" HorizontalAlignment="Left" Background="#FF1E1E1E" Width="500">
                         <ToolBar x:Name="tbSender" 
@@ -134,8 +134,8 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Редактирование писем" >
-                <StackPanel Width="342">
+            <TabItem x:Name="tabRedactor" Header="Редактирование писем">
+                <StackPanel Width="342" Height="360">
                     <Label Content="Название письма:" Width="auto" Margin="10,3"/>
                     <TextBox Grid.Row="1"  x:Name="tbSubject" Text="Тест рассыльщика" Foreground="{DynamicResource TextBoxForegroundBrush}" BorderBrush="#A8FDDA81" Margin="2,3,2,5"/>
                     <Label Content="Содержимое письма:" Width="auto" Margin="10,3"/>
@@ -164,7 +164,7 @@
                     <Button  x:Name="btnSend" Content="Отправить немедленно" Click="btnSend_Click" Margin="2,5,2,0" Height="30" />
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Настройки">
+            <TabItem x:Name="tabSettings" Header="Настройки">
                 <WrapPanel Height="166" VerticalAlignment="Top" Width="342" HorizontalAlignment="Left">
                     <Label Content="Сервер:" Width="auto" VerticalAlignment="Center" Margin="0,5,3,5"/>
                     <TextBox Grid.Row="1"  x:Name="tbServer" Width="130" HorizontalAlignment="Center" Text="smtp.gmail.com" Height="22" VerticalAlignment="Center" Margin="2,5,10,5" Foreground="#FF999999" />
@@ -180,7 +180,7 @@
                 </WrapPanel>
 
             </TabItem>
-            <TabItem Header="Журнал">
+            <TabItem x:Name="tabEvents" Header="Журнал">
                 <DockPanel Width="342" MinWidth="340" HorizontalAlignment="Left" VerticalAlignment="Top" Height="315" MinHeight="50">
                     <TextBox x:Name="tbLog" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AllowDrop="False" MinWidth="50" MinHeight="50" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Height="303" Margin="3" DockPanel.Dock="Top"/>
                 </DockPanel>
@@ -201,18 +201,24 @@
                             <Image Source="/Images/mail.jpg" Width="16" Height="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             <TextBlock Text="Отправить сразу" Margin="3,0,0,0"/>
                         </StackPanel>
-                    </Button>
+                    </Button>                    
                 </StackPanel>
             </TabItem>
 
 
 
 
-        </TabControl>
-        <TabSwitcher:TabSwitcherControl HorizontalAlignment="Left" Height="100" Grid.Row="1" VerticalAlignment="Top" Width="100" Margin="10,235,0,0"/>
-        <StatusBar x:Name="sbStatus" Grid.Row="1" Background="#FF1E1E1E" Foreground="{x:Null}" Height="20" VerticalAlignment="Bottom" Grid.RowSpan="2">
+        </TabControl>        
+        <TabSwitcher:TabSwitcherControl x:Name="tscTabSwicher" HorizontalAlignment="Left" Height="38"
+                                        Grid.Row="2" Grid.RowSpan="2" VerticalAlignment="Top" Width="544"
+                                        btnNextClick="TabSwitcherControl_btnNextClick" 
+                                        btnPreviousClick="TabSwitcherControl_btnPreviousClick"/>
+
+
+        <StatusBar x:Name="sbStatus" Grid.Row="3" Background="#FF1E1E1E" Foreground="{x:Null}" Height="25" VerticalAlignment="Bottom">
             <Label x:Name="lbStatus"/>
         </StatusBar>
 
+        
     </Grid>
 </Window>

@@ -33,5 +33,16 @@ namespace MailSenderLib.Properties {
                 return ((string)(this["MailsAndSendersConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=WS121-admin\\SQLEXPRESS;Initial Catalog=MailsAndSenders;Integrated Sec" +
+            "urity=True")]
+        public string MailsAndSendersConnectionString2 {
+            get {
+                return ((string)(this["MailsAndSendersConnectionString2"]));
+            }
+        }
     }
 }

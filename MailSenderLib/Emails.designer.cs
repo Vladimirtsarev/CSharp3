@@ -35,8 +35,9 @@ namespace MailSenderLib
     partial void DeleteEmail(Email instance);
     #endregion
 		
-		public EmailsDataContext() : 
-				base(global::MailSenderLib.Properties.Settings.Default.MailsAndSendersConnectionString, mappingSource)
+		public EmailsDataContext() :
+			//base(global::MailSenderLib.Properties.Settings.Default.MailsAndSendersConnectionString, mappingSource) // дома
+			base(global::MailSenderLib.Properties.Settings.Default.MailsAndSendersConnectionString2, mappingSource) //на работе						
 		{
 			OnCreated();
 		}

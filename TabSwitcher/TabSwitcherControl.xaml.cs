@@ -24,6 +24,11 @@ namespace TabSwitcher
         private bool bHidebtnPrevious = false; // поле, соответствующее тому, будет ли скрыта кнопка «Предыдущий»
         private bool bHideBtnNext = false; // поле, соответствующее тому, будет ли скрыта кнопка «Следующий»
 
+        public TabSwitcherControl()
+        {
+            InitializeComponent();
+        }
+
         /// <summary>
         /// Свойство, соответствующее тому, будет ли скрыта кнопка «Предыдущий». 
         /// Чтобы Свойство отразилось на PropertiesGrid у нашего контрола, его нужно представить именно свойством, а не полем
@@ -92,6 +97,9 @@ namespace TabSwitcher
 
         public event RoutedEventHandler btnNextClick;
         public event RoutedEventHandler btnPreviousClick;
+
+        //public static readonly RoutedEvent IndexChangedEvent = new EventManager.
+        
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
             btnNextClick?.Invoke(sender, e);
@@ -99,11 +107,6 @@ namespace TabSwitcher
         private void btnPrevious_Click(object sender, RoutedEventArgs e)
         {
             btnPreviousClick?.Invoke(sender, e);
-        }
-
-
-
-
-
+        }       
     }
 }
