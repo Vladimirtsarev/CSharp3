@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MailSender"
         xmlns:TabSwitcher="clr-namespace:TabSwitcher;assembly=TabSwitcher"
+        xmlns:dg="http://schemas.xceed.com/wpf/xaml/toolkit"
         x:Class="MailSender.MainWindow"
         mc:Ignorable="d"
         Title="Рассыльщик" Height="540.833" Width="550" 
@@ -42,7 +43,7 @@
                                    Width="130" Height="25" 
                                    HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"
                                    />
-                            <ComboBox x:Name="cbSenderSelect" SelectedIndex="0" Margin="1,0,5,0" MinWidth="200">
+                            <ComboBox x:Name="cbSenderSelect" Margin="1,0,5,0" MinWidth="200">
                                 <!--<ComboBoxItem>report@litaform.ru</ComboBoxItem>
                                 <ComboBoxItem>79262685273@ya.ru</ComboBoxItem>-->
                             </ComboBox>
@@ -74,8 +75,8 @@
                                    Width="130" Height="25" 
                                    HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"
                                    />
-                            <ComboBox x:Name="cbSmtpSelect" SelectedIndex="0" Margin="1,0,5,0" MinWidth="200">
-                                <ComboBoxItem Content="smtp.yandex.com"/>
+                            <ComboBox x:Name="cbSmtpSelect" Margin="1,0,5,0" MinWidth="200">
+                                <!--<ComboBoxItem Content="smtp.yandex.com"/>-->
                             </ComboBox>
                             <Button x:Name="btnAddSmtp"
                                     Width="23" Height="23" 
@@ -129,9 +130,9 @@
                             </Button>
                         </ToolBar>
                     </ToolBarTray>
-
+                    
                     <DataGrid x:Name="dgEmails" HorizontalAlignment="Left" Height="135" Grid.Row="1" VerticalAlignment="Top" Width="500" MinWidth="300" MinHeight="100"/>
-
+                    <!--<dg:DateTimePicker/>-->
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabRedactor" Header="Редактирование писем">
@@ -190,6 +191,7 @@
                 <StackPanel Width="342" MinWidth="340" HorizontalAlignment="Left" VerticalAlignment="Top" Height="315" MinHeight="50">
                     <Calendar x:Name="cldSchedulDateTimes" Height="100" Width="88" HorizontalAlignment="Center" VerticalAlignment="Top" MinWidth="180" MinHeight="165" SelectionMode="MultipleRange" Margin="0,5"/>
                     <TextBox x:Name="tbTimePicker" VerticalAlignment="Top" HorizontalAlignment="Center" MinWidth="180" Margin="0,5" />
+                    <dg:TimePicker  x:Name="tpTimePicker" VerticalAlignment="Top" HorizontalAlignment="Center" MinWidth="180" Margin="0,5" />
                     <Button x:Name="btnSendP" HorizontalAlignment="Center" MinWidth="180" MinHeight="20" Margin="0,5" Click="btnSendP_Click">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Images/clock.png" Width="16" Height="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -201,7 +203,8 @@
                             <Image Source="/Images/mail.jpg" Width="16" Height="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             <TextBlock Text="Отправить сразу" Margin="3,0,0,0"/>
                         </StackPanel>
-                    </Button>                    
+                    </Button>
+                    
                 </StackPanel>
             </TabItem>
 

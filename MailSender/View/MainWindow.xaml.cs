@@ -1,24 +1,9 @@
-﻿
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
 using MailSenderLib;
 
 namespace MailSender
@@ -35,6 +20,13 @@ namespace MailSender
             cbSenderSelect.ItemsSource = StaticVariables.Senders;
             cbSenderSelect.DisplayMemberPath = "Key";
             cbSenderSelect.SelectedValuePath = "Value";
+            cbSenderSelect.SelectedIndex = 0;
+
+            cbSmtpSelect.ItemsSource = StaticVariables.SMTPServers;
+            cbSmtpSelect.DisplayMemberPath = "Key";
+            cbSmtpSelect.SelectedValuePath = "Value";
+            cbSmtpSelect.SelectedIndex = 0;
+
 
             DB db = new DB();
             dgEmails.ItemsSource = db.Emails;
@@ -49,7 +41,7 @@ namespace MailSender
             {
                 // из StaticVariables
                 Presets2();
-            }            
+            }
         }
 
         /// <summary>
@@ -109,9 +101,22 @@ namespace MailSender
             try
             {
                 MailAddress mTo = new MailAddress(cbTo.Text);
+                
+                string bodyText = File.ReadAllText("Body.html");                               
+                   
+                MailSenderLib.MailSender ms = new MailSenderLib.MailSender(cbSenderSelect.Text, cbSmtpSelect.Text, (int)cbSmtpSelect.SelectedValue,
+                    tbPassword.Password, true, cbSenderSelect.Text, true, mTo, tbSubject.Text, bodyText, null);
 
-                MailSenderLib.MailSender ms = new MailSenderLib.MailSender(mTo, tbSubject.Text, tbBody.Text, null);
-                ms.Send();
+                //MailSenderLib.MailSender ms = new MailSenderLib.MailSender(mTo, tbSubject.Text, tbBody.Text, null);
+
+                var body = new TextRange(rtbBody.Document.ContentStart, rtbBody.Document.ContentEnd);
+                if (string.IsNullOrEmpty(body.Text.Replace("\r\n","")))
+                {
+                    ErrorMessageWindow emw = new ErrorMessageWindow(new Exception("Пустое письмо"));
+                    emw.ShowDialog();
+
+                }
+                //ms.Send();
             }
             catch (Exception e)
             {
@@ -119,6 +124,7 @@ namespace MailSender
 
                 ErrorMessageWindow emw = new ErrorMessageWindow(e);
                 emw.ShowDialog();
+                tabControl.SelectedItem = tabRedactor;
             }
 
         }
@@ -137,7 +143,7 @@ namespace MailSender
         {
             tabControl.SelectedItem = tabPlanner;
         }
-        
+
         /// <summary>
         /// Нажатие кнопки Отправить сейчас
         /// </summary>
@@ -174,7 +180,8 @@ namespace MailSender
         private void btnSendP_Click(object sender, RoutedEventArgs e)
         {
             SchedulerClass sc = new SchedulerClass();
-            TimeSpan tsSendTime = sc.GetSendTime(tbTimePicker.Text);
+            //TimeSpan tsSendTime = sc.GetSendTime(tbTimePicker.Text);
+            TimeSpan tsSendTime = sc.GetSendTime(tpTimePicker.Text);
             if (tsSendTime == new TimeSpan())
             {
                 //MessageBox.Show("Некорректный формат даты");
@@ -203,17 +210,17 @@ namespace MailSender
         private void TabSwitcherControl_btnNextClick(object sender, RoutedEventArgs e)
         {
             if (tabControl.SelectedIndex < tabControl.Items.Count - 1)
-            {                
+            {
                 // Показываем все
                 tscTabSwicher.IsHideBtnNext = false;
-                tscTabSwicher.IsHidebtnPrevious = false; 
-                
+                tscTabSwicher.IsHidebtnPrevious = false;
+
                 tabControl.SelectedIndex++;
             }
             if (tabControl.SelectedIndex == tabControl.Items.Count - 1)
             {
                 // скрываем следующую
-                tscTabSwicher.IsHideBtnNext = true;                
+                tscTabSwicher.IsHideBtnNext = true;
             }
         }
 
@@ -223,7 +230,7 @@ namespace MailSender
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void TabSwitcherControl_btnPreviousClick(object sender, RoutedEventArgs e)
-        {            
+        {
             if (tabControl.SelectedIndex == 1)
             {
                 // скрываем предыдущую
@@ -236,9 +243,9 @@ namespace MailSender
                 //показываем все
                 tscTabSwicher.IsHidebtnPrevious = false;
                 tscTabSwicher.IsHideBtnNext = false;
-                
+
                 tabControl.SelectedIndex--;
-            }            
+            }
         }
     }
 }

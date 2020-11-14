@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Mail;
+using CodePassword;
 
 namespace MailSenderLib
 {
@@ -15,7 +16,7 @@ namespace MailSenderLib
     {
         private readonly SmtpClient smtp = new SmtpClient();
 
-        private readonly MailMessage message =new MailMessage();
+        private readonly MailMessage message = new MailMessage();
 
         /// <summary>
         /// Посылает письмо
@@ -41,11 +42,11 @@ namespace MailSenderLib
             if (attachFile != null)
             {
                 foreach (string s in attachFile)
-                {                   
+                {
                     message.Attachments.Add(new Attachment(s));
                 }
-                
-            }            
+
+            }
 
             // smtp
             smtp.Host = credential.SmtpServer;
@@ -57,25 +58,68 @@ namespace MailSenderLib
         }
 
         /// <summary>
+        /// Посылает письмо
+        /// </summary>
+        /// <param name="mailfrom">От кого</param>
+        /// <param name="smtps">SMTP сервер</param>
+        /// <param name="port">Порт</param>
+        /// <param name="pw">Пароль</param>
+        /// <param name="ssl">Включить SSL</param>
+        /// <param name="mailfromname"></param>
+        /// <param name="isbodyhtml"></param>
+        /// <param name="mailto">Кому</param>
+        /// <param name="subject">Тема</param>
+        /// <param name="body">Тело письма</param>
+        /// <param name="attachFile">путь к приложениям</param>
+        public MailSender(string mailfrom, string smtps, int port, string pw, bool ssl, string mailfromname, bool isbodyhtml,
+            MailAddress mailto, string subject, string body, string[] attachFile)
+        {
+            // message
+            message = new MailMessage(new MailAddress(mailfrom, mailfromname), mailto)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = isbodyhtml
+            };
+
+            if (attachFile != null)
+            {
+                foreach (string s in attachFile)
+                {
+                    message.Attachments.Add(new Attachment(s));
+                }
+
+            }
+
+            // smtp
+            smtp.Host = smtps;
+            smtp.Port = port;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential(mailfrom, pw);
+            smtp.EnableSsl = ssl;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+        }
+
+        /// <summary>
         /// Отправить
         /// </summary>
         public void Send()
         {
             try
-            {                
+            {
                 smtp.Send(message);
-                MessageBox.Show("Сообщение отправлено");                
+                MessageBox.Show("Сообщение отправлено");
             }
             catch (Exception ex)
-            {              
+            {
                 MessageBox.Show(ex.ToString());
             }
 
 
         }
 
-       
 
-        
+
+
     }
 }

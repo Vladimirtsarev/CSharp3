@@ -70,5 +70,15 @@ namespace MailSender
 
         };
 
+        public static Dictionary<string, int> SMTPServers
+        {
+            get { return dicSMTPServers; }
+        }
+        private static Dictionary<string, int> dicSMTPServers = new Dictionary<string, int>()
+        {
+            {"smtp.gmail.com", 587 }
+            ,{"smtp.yandex.com", 587 }
+        };
+
     }
 }

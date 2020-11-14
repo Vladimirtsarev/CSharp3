@@ -84,5 +84,11 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodePassword\CodePassword.csproj">
+      <Project>{471295ad-5e30-4da5-a417-0c7e1f375d66}</Project>
+      <Name>CodePassword</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
