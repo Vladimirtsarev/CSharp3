@@ -36,8 +36,8 @@ namespace MailSenderLib
     #endregion
 		
 		public EmailsDataContext() :
-			//base(global::MailSenderLib.Properties.Settings.Default.MailsAndSendersConnectionString, mappingSource) // дома
-			base(global::MailSenderLib.Properties.Settings.Default.MailsAndSendersConnectionString2, mappingSource) //на работе						
+			base(global::MailSenderLib.Properties.Settings.Default.MailsAndSendersConnectionString, mappingSource) // дома
+			//base(global::MailSenderLib.Properties.Settings.Default.MailsAndSendersConnectionString2, mappingSource) //на работе						
 		{
 			OnCreated();
 		}

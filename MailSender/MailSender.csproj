@@ -138,6 +138,10 @@
     <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bar\Bar.csproj">
+      <Project>{4407A170-43C7-46B0-A5FD-EC6DEFC39F5F}</Project>
+      <Name>Bar</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodePassword\CodePassword.csproj">
       <Project>{471295ad-5e30-4da5-a417-0c7e1f375d66}</Project>
       <Name>CodePassword</Name>
@@ -158,7 +162,6 @@
     <Resource Include="Images\add.png" />
     <Resource Include="Images\clock.png" />
     <Resource Include="Images\edit.png" />
-    <Resource Include="Images\mail.jpg" />
     <Resource Include="Images\mail.png" />
     <Resource Include="Images\remove.png" />
     <Resource Include="Images\scheduler.png" />

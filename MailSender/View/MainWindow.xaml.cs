@@ -17,15 +17,25 @@ namespace MailSender
         {
             InitializeComponent();
 
-            cbSenderSelect.ItemsSource = StaticVariables.Senders;
-            cbSenderSelect.DisplayMemberPath = "Key";
-            cbSenderSelect.SelectedValuePath = "Value";
-            cbSenderSelect.SelectedIndex = 0;
+            barSender.ComboBox.ItemsSource = StaticVariables.Senders;
+            barSender.ComboBox.DisplayMemberPath = "Key";
+            barSender.ComboBox.SelectedValuePath = "Value";
+            barSender.ComboBox.SelectedIndex = 0;
 
-            cbSmtpSelect.ItemsSource = StaticVariables.SMTPServers;
-            cbSmtpSelect.DisplayMemberPath = "Key";
-            cbSmtpSelect.SelectedValuePath = "Value";
-            cbSmtpSelect.SelectedIndex = 0;
+            barSmtp.ComboBox.ItemsSource = StaticVariables.SMTPServers;
+            barSmtp.ComboBox.DisplayMemberPath = "Key";
+            barSmtp.ComboBox.SelectedValuePath = "Value";
+            barSmtp.ComboBox.SelectedIndex = 0;
+
+            //cbSenderSelect.ItemsSource = StaticVariables.Senders;
+            //cbSenderSelect.DisplayMemberPath = "Key";
+            //cbSenderSelect.SelectedValuePath = "Value";
+            //cbSenderSelect.SelectedIndex = 0;
+
+            //cbSmtpSelect.ItemsSource = StaticVariables.SMTPServers;
+            //cbSmtpSelect.DisplayMemberPath = "Key";
+            //cbSmtpSelect.SelectedValuePath = "Value";
+            //cbSmtpSelect.SelectedIndex = 0;
 
 
             DB db = new DB();
@@ -78,22 +88,6 @@ namespace MailSender
         }
 
         /// <summary>
-        /// Нажатие Отправить письмо 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnSend_Click(object sender, RoutedEventArgs e)
-        {
-            SendMail();
-
-            SendEndWindow sew = new SendEndWindow();
-            sew.ShowDialog();
-
-            //ErrorMessageWindow emw = new ErrorMessageWindow(new Exception("Типа ошибка"));
-            //emw.ShowDialog();
-        }
-
-        /// <summary>
         /// Отправка письма на почтовый ящик
         /// </summary>       
         private void SendMail()
@@ -101,16 +95,16 @@ namespace MailSender
             try
             {
                 MailAddress mTo = new MailAddress(cbTo.Text);
+
+                string bodyText = File.ReadAllText("Body.html");
                 
-                string bodyText = File.ReadAllText("Body.html");                               
-                   
-                MailSenderLib.MailSender ms = new MailSenderLib.MailSender(cbSenderSelect.Text, cbSmtpSelect.Text, (int)cbSmtpSelect.SelectedValue,
-                    tbPassword.Password, true, cbSenderSelect.Text, true, mTo, tbSubject.Text, bodyText, null);
+                MailSenderLib.MailSender ms = new MailSenderLib.MailSender(barSender.ComboBox.Text, barSmtp.ComboBox.Text, (int)barSmtp.ComboBox.SelectedValue,
+                    tbPassword.Password, true, barSender.ComboBox.Text, true, mTo, tbSubject.Text, bodyText, null);
 
                 //MailSenderLib.MailSender ms = new MailSenderLib.MailSender(mTo, tbSubject.Text, tbBody.Text, null);
 
                 var body = new TextRange(rtbBody.Document.ContentStart, rtbBody.Document.ContentEnd);
-                if (string.IsNullOrEmpty(body.Text.Replace("\r\n","")))
+                if (string.IsNullOrEmpty(body.Text.Replace("\r\n", "")))
                 {
                     ErrorMessageWindow emw = new ErrorMessageWindow(new Exception("Пустое письмо"));
                     emw.ShowDialog();
@@ -127,6 +121,25 @@ namespace MailSender
                 tabControl.SelectedItem = tabRedactor;
             }
 
+        }
+
+        
+        #region Clicks
+
+        /// <summary>
+        /// Нажатие Отправить письмо 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSend_Click(object sender, RoutedEventArgs e)
+        {
+            SendMail();
+
+            SendEndWindow sew = new SendEndWindow();
+            sew.ShowDialog();
+
+            //ErrorMessageWindow emw = new ErrorMessageWindow(new Exception("Типа ошибка"));
+            //emw.ShowDialog();
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -151,8 +164,8 @@ namespace MailSender
         /// <param name="e"></param>
         private void btnSendAtOnce_Click(object sender, RoutedEventArgs e)
         {
-            string strLogin = cbSenderSelect.Text;
-            string strPassword = cbSenderSelect.SelectedValue.ToString();
+            string strLogin = barSender.ComboBox.Text;//cbSenderSelect.Text;
+            string strPassword = barSender.ComboBox.SelectedValue.ToString();
             if (string.IsNullOrEmpty(strLogin))
             {
                 //MessageBox.Show("Выберите отправителя");
@@ -197,7 +210,7 @@ namespace MailSender
                 emw.ShowDialog();
                 return;
             }
-            EmailSendService emailSender = new EmailSendService(cbSenderSelect.Text, cbSenderSelect.SelectedValue.ToString());
+            EmailSendService emailSender = new EmailSendService(barSender.ComboBox.Text, barSender.ComboBox.SelectedValue.ToString());
             sc.SendEmails(dtSendDateTime, emailSender, (IQueryable<Email>)dgEmails.ItemsSource);
 
         }
@@ -247,5 +260,36 @@ namespace MailSender
                 tabControl.SelectedIndex--;
             }
         }
+
+        private void UC_Bar_btnAddSenderClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Добавить отправителя");
+        }
+
+        private void UC_Bar_btnEditSenderClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Редактировать отправителя");
+        }
+
+        private void UC_Bar_btnDeleteSenderClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Удалить отправителя");
+        }
+
+        private void UC_Bar_btnAddSmtpClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Добавить smtp");
+        }
+
+        private void UC_Bar_btnEditSmtpClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Редактировать smtp");
+        }
+
+        private void UC_Bar_btnDeleteSmtpClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Удалить smtp");
+        }
+        #endregion
     }
 }

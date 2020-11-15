@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="Bar.UC_Bar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Bar"
+             mc:Ignorable="d" Height="29" Width="500" Background="#FF2e2e2e">
+    <Grid Background="#FF2e2e2e">
+        <StackPanel x:Name="spanel" Background="#FF2e2e2e"
+                                 Width="480" Height="30"
+                                 VerticalAlignment="Top" HorizontalAlignment="Left" Orientation="Horizontal">
+            <Label x:Name="label" Content="Выбрать отправителя" 
+                                   Width="130" Height="25" Background="#FF2e2e2e"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Foreground="#FFE0E0E0"/>
+            <ComboBox x:Name="cbox" Margin="1,0,5,0" MinWidth="200" Background="#FF2e2e2e" BorderBrush="#FFB1703C" Foreground="#FFE0E0E0" Height="23" VerticalAlignment="Center"></ComboBox>
+        <Button x:Name="btnAdd" Background="#FF505050" Width="23" Height="23" 
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                    ToolTip="Добавить" Margin="5,0" MinWidth="20" MinHeight="20" Foreground="#FFE0E0E0" BorderBrush="#FFB1703C" Click="btnAdd_Click">
+                <Image Source="/Images/add.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Fill"/>
+        </Button>
+            <Button x:Name="btnEdit" Background="#FF505050"
+                                    Width="23" Height="23" 
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                    ToolTip="Редактировать" Margin="5,0" MinWidth="20" MinHeight="20" BorderBrush="#FFB1703C" Click="btnEdit_Click">
+                <Image Source="/Images/edit.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Fill"/>
+        </Button>
+            <Button x:Name="btnDelete" Background="#FF505050"
+                                    Width="23" Height="23" 
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                    ToolTip="Удалить" Margin="5,0" MinWidth="20" MinHeight="20" BorderBrush="#FFB1703C" Click="btnDelete_Click">
+                <Image Source="/Images/remove.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

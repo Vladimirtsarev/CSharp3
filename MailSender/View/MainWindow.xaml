@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:MailSender"
         xmlns:TabSwitcher="clr-namespace:TabSwitcher;assembly=TabSwitcher"
         xmlns:dg="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:Bar="clr-namespace:Bar;assembly=Bar"
         x:Class="MailSender.MainWindow"
         mc:Ignorable="d"
         Title="Рассыльщик" Height="540.833" Width="550" 
@@ -32,71 +33,23 @@
             <TabItem x:Name="tabEmails" Header="Группы рассылки">
                 <Grid Height="370">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="95"/>
-                        <RowDefinition Height="174*"/>
+                        <RowDefinition Height="126"/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <ToolBarTray VerticalAlignment="Top" Height="92" Margin="0" HorizontalAlignment="Left" Background="#FF1E1E1E" Width="500">
-                        <ToolBar x:Name="tbSender" 
-                                 Width="500" Height="30"
-                                 VerticalAlignment="Top" HorizontalAlignment="Left" BandIndex="-1">
-                            <Label x:Name="ISender" Content="Выбрать отправителя" 
-                                   Width="130" Height="25" 
-                                   HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"
-                                   />
-                            <ComboBox x:Name="cbSenderSelect" Margin="1,0,5,0" MinWidth="200">
-                                <!--<ComboBoxItem>report@litaform.ru</ComboBoxItem>
-                                <ComboBoxItem>79262685273@ya.ru</ComboBoxItem>-->
-                            </ComboBox>
-                            <Button x:Name="btnAddSender"
-                                    Width="23" Height="23" 
-                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                    ToolTip="Добавить" Margin="5,0" MinWidth="20" MinHeight="20">
-                                <Image Source="/Images/add.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Fill" />
-                            </Button>
-                            <Button x:Name="btnEditSender"
-                                    Width="23" Height="23" 
-                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                    ToolTip="Редактировать" Margin="5,0" MinWidth="20" MinHeight="20" >
-                                <Image Source="/Images/edit.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Fill"/>
-                            </Button>
-                            <Button x:Name="btnDeleteSender"
-                                    Width="23" Height="23" 
-                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                    ToolTip="Удалить" Margin="5,0" MinWidth="20" MinHeight="20" >
-                                <Image Source="/Images/remove.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Button>
-
+                    <ToolBarTray VerticalAlignment="Top" Height="130" Margin="0" HorizontalAlignment="Left"
+                                 Background="#FF1E1E1E" Width="500" Grid.RowSpan="2">
+                        <ToolBar Band="0" Margin="0" HorizontalAlignment="Left" Width="501" Height="34">
+                            <Bar:UC_Bar x:Name="barSender" Text="Выбрать отправителя" Height="30" Width="451"                                        
+                                        btnAddClick="UC_Bar_btnAddSenderClick"
+                                        btnEditClick="UC_Bar_btnEditSenderClick"
+                                        btnDeleteClick="UC_Bar_btnDeleteSenderClick"/>
                         </ToolBar>
-                        <ToolBar x:Name="tbSmtp" 
-                                 Width="500" Height="30"
-                                 VerticalAlignment="Top" HorizontalAlignment="Left"
-                                 Band="1" VerticalContentAlignment="Center" Margin="0">
-                            <Label x:Name="ISmtp" Content="Выбрать SMTP-сервер" 
-                                   Width="130" Height="25" 
-                                   HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"
-                                   />
-                            <ComboBox x:Name="cbSmtpSelect" Margin="1,0,5,0" MinWidth="200">
-                                <!--<ComboBoxItem Content="smtp.yandex.com"/>-->
-                            </ComboBox>
-                            <Button x:Name="btnAddSmtp"
-                                    Width="23" Height="23" 
-                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                    ToolTip="Добавить" Margin="5,0" MinWidth="20" MinHeight="20">
-                                <Image Source="/Images/add.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Fill" />
-                            </Button>
-                            <Button x:Name="btnEditSmtp"
-                                    Width="23" Height="23" 
-                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                    ToolTip="Редактировать" Margin="5,0" MinWidth="20" MinHeight="20" >
-                                <Image Source="/Images/edit.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Fill"/>
-                            </Button>
-                            <Button x:Name="btnDeleteSmtp"
-                                    Width="23" Height="23" 
-                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                    ToolTip="Удалить" Margin="5,0" MinWidth="20" MinHeight="20" >
-                                <Image Source="/Images/remove.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Button>
-                        </ToolBar>
+                        <ToolBar Band="1" Margin="0" HorizontalAlignment="Left" Width="501" Height="34">
+                            <Bar:UC_Bar x:Name="barSmtp" Text="Выбрать SMTP-сервер" Height="30" Width="451"                                        
+                                        btnAddClick="UC_Bar_btnAddSmtpClick"
+                                        btnEditClick="UC_Bar_btnEditSmtpClick"
+                                        btnDeleteClick="UC_Bar_btnDeleteSmtpClick"/>
+                        </ToolBar>                        
                         <ToolBar x:Name="tbPlanner" Band="2" MinWidth="237">
                             <Label x:Name="IPlanner" Content="Перейти в планировщик" Height="25" 
                                    HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" MinWidth="140"/>
@@ -128,68 +81,80 @@
                                     ToolTip="Удалить" Margin="5,0" MinWidth="20" MinHeight="20" >
                                 <Image Source="/Images/remove.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Button>
-                        </ToolBar>
+                        </ToolBar>                        
                     </ToolBarTray>
-                    
-                    <DataGrid x:Name="dgEmails" HorizontalAlignment="Left" Height="135" Grid.Row="1" VerticalAlignment="Top" Width="500" MinWidth="300" MinHeight="100"/>
+
+                    <DataGrid x:Name="dgEmails" HorizontalAlignment="Left" Height="135" Grid.Row="1"
+                              VerticalAlignment="Top" Width="500" MinWidth="300" MinHeight="100"/>
                     <!--<dg:DateTimePicker/>-->
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabRedactor" Header="Редактирование писем">
                 <StackPanel Width="342" Height="360">
                     <Label Content="Название письма:" Width="auto" Margin="10,3"/>
-                    <TextBox Grid.Row="1"  x:Name="tbSubject" Text="Тест рассыльщика" Foreground="{DynamicResource TextBoxForegroundBrush}" BorderBrush="#A8FDDA81" Margin="2,3,2,5"/>
+                    <TextBox Grid.Row="1"  x:Name="tbSubject" Text="Тест рассыльщика" 
+                             Foreground="{DynamicResource TextBoxForegroundBrush}" 
+                             BorderBrush="#A8FDDA81" Margin="2,3,2,5"/>
                     <Label Content="Содержимое письма:" Width="auto" Margin="10,3"/>
-                    <RichTextBox Grid.Row="1"  x:Name="rtbBody" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="80" Margin="2,3,2,5">
+                    <RichTextBox Grid.Row="1"  x:Name="rtbBody" HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Stretch" Height="80" Margin="2,3,2,5">
                         <FlowDocument>
                             <Paragraph>
                                 <Run Text="Текст рассылки"/>
                             </Paragraph>
                         </FlowDocument>
                     </RichTextBox>
-                    <TextBox Grid.Row="1"  x:Name="tbBody" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="25" AcceptsReturn="True"
+                    <TextBox Grid.Row="1"  x:Name="tbBody" HorizontalAlignment="Stretch" 
+                             VerticalAlignment="Stretch" Height="25" AcceptsReturn="True"
                              ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto"
                              Text="Текст рассылки" 
                              Foreground="#FF999999" BorderBrush="#A8FDDA81" 
                              Margin="2,3,2,5"/>
                     <Label Content="От:" Margin="10,3"/>
-                    <ComboBox x:Name="cbFrom" Text="report@litaform.ru" SelectedIndex="0" BorderBrush="#FF222222" Foreground="#FF999999" Background="Black" Margin="2,3,2,5">
-                        <ComboBoxItem Content="report@litaform.ru"/>
-                        <ComboBoxItem Content="79262685273@ya.ru"/>
-                    </ComboBox>
+                    <ComboBox x:Name="cbFrom" Text="report@litaform.ru" SelectedIndex="0" BorderBrush="#FF222222" 
+                              Foreground="#FF999999" Background="Black" Margin="2,3,2,5"/>
                     <Label Content="Кому:" Margin="10,3"/>
-                    <ComboBox x:Name="cbTo" Text="79262685273@ya.ru" SelectedIndex="0" Foreground="#FF999999" Margin="2,3,2,5">
-                        <ComboBoxItem Content="79262685273@ya.ru"/>
-                        <ComboBoxItem Content="putin@kremlin.ru"/>
-                    </ComboBox>
-                    <Button  x:Name="btnSend" Content="Отправить немедленно" Click="btnSend_Click" Margin="2,5,2,0" Height="30" />
+                    <ComboBox x:Name="cbTo" Text="79262685273@ya.ru" SelectedIndex="0" Foreground="#FF999999" Margin="2,3,2,5"/>
+                    <Button  x:Name="btnSend" Content="Отправить немедленно" Click="btnSend_Click" Margin="2,5,2,0" Height="30"/>
                 </StackPanel>
             </TabItem>
             <TabItem x:Name="tabSettings" Header="Настройки">
                 <WrapPanel Height="166" VerticalAlignment="Top" Width="342" HorizontalAlignment="Left">
                     <Label Content="Сервер:" Width="auto" VerticalAlignment="Center" Margin="0,5,3,5"/>
-                    <TextBox Grid.Row="1"  x:Name="tbServer" Width="130" HorizontalAlignment="Center" Text="smtp.gmail.com" Height="22" VerticalAlignment="Center" Margin="2,5,10,5" Foreground="#FF999999" />
+                    <TextBox Grid.Row="1"  x:Name="tbServer" Width="130" HorizontalAlignment="Center"
+                             Text="smtp.gmail.com" Height="22" VerticalAlignment="Center"
+                             Margin="2,5,10,5" Foreground="#FF999999" />
                     <Line/>
                     <Label Content="Порт:" Width="auto" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,5,3,5"/>
-                    <TextBox x:Name="tbPort" Width="36" Text="587" Height="22" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3,5,10,5" Foreground="#FF999999"/>
-                    <CheckBox x:Name="chBoxSSL" Height="15" Width="42" Content="SSL" IsChecked="True" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,5,3,5" Background="#FF444444"/>
+                    <TextBox x:Name="tbPort" Width="36" Text="587" Height="22" HorizontalAlignment="Center"
+                             VerticalAlignment="Center" Margin="3,5,10,5" Foreground="#FF999999"/>
+                    <CheckBox x:Name="chBoxSSL" Height="15" Width="42" Content="SSL" IsChecked="True"
+                              HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,5,3,5" Background="#FF444444"/>
                     <Label Content="Имя пользователя:" Width="auto" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,3"/>
-                    <TextBox Grid.Row="1" x:Name="tbUserName" Width="340" Text="report@litaform.ru" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,3,0,5" Foreground="#FF999999" />
+                    <TextBox Grid.Row="1" x:Name="tbUserName" Width="340" Text="report@litaform.ru" Height="25"
+                             HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,3,0,5" Foreground="#FF999999" />
                     <Label Content="Пароль:" Width="auto" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <PasswordBox Grid.Row="1" x:Name="tbPassword" Width="340" PasswordChar="*" Password="" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,3,0,5" Foreground="#FF999999" BorderBrush="#A8FDDA81"/>
+                    <PasswordBox Grid.Row="1" x:Name="tbPassword" Width="340" PasswordChar="*" Password="" 
+                                 Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                 Margin="0,3,0,5" Foreground="#FF999999" BorderBrush="#A8FDDA81"/>
 
                 </WrapPanel>
 
             </TabItem>
             <TabItem x:Name="tabEvents" Header="Журнал">
                 <DockPanel Width="342" MinWidth="340" HorizontalAlignment="Left" VerticalAlignment="Top" Height="315" MinHeight="50">
-                    <TextBox x:Name="tbLog" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AllowDrop="False" MinWidth="50" MinHeight="50" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Height="303" Margin="3" DockPanel.Dock="Top"/>
+                    <TextBox x:Name="tbLog" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True"
+                             ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             HorizontalScrollBarVisibility="Auto" AllowDrop="False" MinWidth="50" MinHeight="50"
+                             HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Height="303"
+                             Margin="3" DockPanel.Dock="Top"/>
                 </DockPanel>
 
             </TabItem>
             <TabItem x:Name="tabPlanner" Header="Планировщик">
                 <StackPanel Width="342" MinWidth="340" HorizontalAlignment="Left" VerticalAlignment="Top" Height="315" MinHeight="50">
-                    <Calendar x:Name="cldSchedulDateTimes" Height="100" Width="88" HorizontalAlignment="Center" VerticalAlignment="Top" MinWidth="180" MinHeight="165" SelectionMode="MultipleRange" Margin="0,5"/>
+                    <Calendar x:Name="cldSchedulDateTimes" Height="100" Width="88" HorizontalAlignment="Center"
+                              VerticalAlignment="Top" MinWidth="180" MinHeight="165" SelectionMode="MultipleRange" Margin="0,5"/>
                     <TextBox x:Name="tbTimePicker" VerticalAlignment="Top" HorizontalAlignment="Center" MinWidth="180" Margin="0,5" />
                     <dg:TimePicker  x:Name="tpTimePicker" VerticalAlignment="Top" HorizontalAlignment="Center" MinWidth="180" Margin="0,5" />
                     <Button x:Name="btnSendP" HorizontalAlignment="Center" MinWidth="180" MinHeight="20" Margin="0,5" Click="btnSendP_Click">
@@ -200,28 +165,19 @@
                     </Button>
                     <Button x:Name="btnSendAtOnce" HorizontalAlignment="Center" MinWidth="180" MinHeight="20" Margin="0,5" Click="btnSendAtOnce_Click">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="/Images/mail.jpg" Width="16" Height="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <Image Source="/Images/mail.png" Width="16" Height="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             <TextBlock Text="Отправить сразу" Margin="3,0,0,0"/>
                         </StackPanel>
                     </Button>
-                    
                 </StackPanel>
             </TabItem>
-
-
-
-
-        </TabControl>        
+        </TabControl>
         <TabSwitcher:TabSwitcherControl x:Name="tscTabSwicher" HorizontalAlignment="Left" Height="38"
                                         Grid.Row="2" Grid.RowSpan="2" VerticalAlignment="Top" Width="544"
-                                        btnNextClick="TabSwitcherControl_btnNextClick" 
+                                        btnNextClick="TabSwitcherControl_btnNextClick"
                                         btnPreviousClick="TabSwitcherControl_btnPreviousClick"/>
-
-
         <StatusBar x:Name="sbStatus" Grid.Row="3" Background="#FF1E1E1E" Foreground="{x:Null}" Height="25" VerticalAlignment="Bottom">
             <Label x:Name="lbStatus"/>
         </StatusBar>
-
-        
     </Grid>
 </Window>
